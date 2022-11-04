@@ -3,14 +3,14 @@ fdm_main.py
 In this python script I attempt to use odeint but I'm confused as to how to use it
 to solve the burger's PDE by combining it with FD.
 """
-from scipy.integrate import odeint
+from scipy.integrate import solve_ivp
 import numpy as np
 import matplotlib.pyplot as plt
 import time
 
 # u is a vector with every point being at a different x
-N = 100  # 400
-nt = 101  # 101  # Time intervals
+N = 3200  # 400
+nt = 3201  # 101  # Time intervals
 dx = 2 / N
 b = 0.01 / np.pi  # viscosity term
 
@@ -38,10 +38,10 @@ u0_int = u0[1:N]
 
 # Define Time Interval
 t = np.linspace(0, 1, nt)
-
+t_eval = range(0, 1, 6401)
 # Where the solution is computed
 # sol = odeint(burgers, u0, t, args=(b))
-u_int = odeint(burgers, u0_int, t, args=(b, N))
+u_int = solve_ivp(burgers, t, u0_int, t_eval=t_eval, args=(b, N))
 u_int = np.transpose(u_int)
 # Writing BC into array
 ## u[:, 0] = u0
@@ -55,7 +55,7 @@ print(u.shape)
 print("--- %s seconds ---" % (time.time() - start_time))
 
 # Export Data ----------------------------------------------------------------------- Change name every run
-np.savetxt("results/FDM/u_100.csv", u, delimiter=",")
+np.savetxt("results/FDM/u_3200.csv", u, delimiter=",")
 
 print("\n --- Data Exported ---")
 # Plot graph
@@ -66,7 +66,7 @@ plt.ylabel("x")
 cbar = plt.colorbar(pad=0.05, aspect=10)
 cbar.set_label("u(t,x)")
 cbar.mappable.set_clim(-1, 1)
-plt.savefig("figures/FDM/FDM_100x101.png", dpi=300)
+plt.savefig("figures/FDM/FDM_3200x3201.png", dpi=300)
 plt.show()
 
 print(u.shape)
