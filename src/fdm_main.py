@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 import time
 
 # u is a vector with every point being at a different x
-N = 100  # 400
-nt = 101  # 101  # Time intervals
+N = 1600  # 400
+nt = 1601  # 101  # Time intervals
 dx = 2 / N
-b = 0.01 / np.pi  # viscosity term
+b = 1 / np.pi  # viscosity term
 
 print("Begin Calculation...\n")
 start_time = time.time()
@@ -55,7 +55,7 @@ print(u.shape)
 print("--- %s seconds ---" % (time.time() - start_time))
 
 # Export Data ----------------------------------------------------------------------- Change name every run
-np.savetxt("results/FDM/u_100.csv", u, delimiter=",")
+np.savetxt("results/FDM/u_1600-1pi.csv", u, delimiter=",")
 
 print("\n --- Data Exported ---")
 # Plot graph
@@ -66,7 +66,7 @@ plt.ylabel("x")
 cbar = plt.colorbar(pad=0.05, aspect=10)
 cbar.set_label("u(t,x)")
 cbar.mappable.set_clim(-1, 1)
-plt.savefig("figures/FDM/FDM_100x101.png", dpi=300)
+plt.savefig("figures/FDM/FDM_1600x1601-1pi.png", dpi=300)
 plt.show()
 
 print(u.shape)

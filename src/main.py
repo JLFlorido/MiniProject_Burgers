@@ -16,12 +16,12 @@ if __name__ == "__main__":
     """
 
     # number of training samples
-    num_train_samples = 1250
+    num_train_samples = 15000
     # num_collocation_samples = 8000
     # number of test samples
-    num_test_samples = 3201
+    num_test_samples = 6401
     # kinematic viscosity
-    nu = 0.01 / np.pi
+    nu = 0.0025 / np.pi
 
     # build a core network model
     network = Network.build()
@@ -50,25 +50,28 @@ if __name__ == "__main__":
     # predict u(t,x) distribution
     # # In theory, if change third argument of t_flat and x_flat linspace from num_test_samples
     # # can choose grid resolution.
-    t_flat = np.linspace(0, (3 / np.pi), num_test_samples)
+    t_flat = np.linspace(
+        0, (3 / np.pi), num_test_samples
+    )  # This 3/pi was here in old code and moving from notebook version wasn't changed... Keep as 3/pi for consistency but fixing to 0 to 1 range will improve accuracy overal...
     x_flat = np.linspace(-1, 1, num_test_samples)
     t, x = np.meshgrid(t_flat, x_flat)
     tx = np.stack([t.flatten(), x.flatten()], axis=-1)
     u = network.predict(tx, batch_size=num_test_samples)
     u = u.reshape(t.shape)
 
+    comp_time = time.time() - start_time
+    print("\nThe training and prediction took %s seconds ~ ~" % (comp_time))
     # Add a line here to save the data for comparison.
     # np.savetxt("t_NN.csv", t, delimiter=",")
     # np.savetxt("x_NN.csv", x, delimiter=",")
-    np.savetxt("../results/raw/Uall_1,25k_NNdef_e12_001pi.csv", u, delimiter=",")
-    print("u NN Array exported ~ ~\n")
 
     # ================================================
-    print("--- %s seconds ---" % (time.time() - start_time))
+    np.savetxt("results/raw/Uall_15k_NNdef_e7_0025pi.csv", u, delimiter=",")
+    print("\nSolution array has been exported ~ ~\n")
 
     # ------------------------------------------------------
     # plot u(t,x) distribution as a color-map       # CELL 4
-    fig = plt.figure(figsize=(7, 6), dpi=200)
+    fig = plt.figure(figsize=(14, 12), dpi=200)
     gs = GridSpec(3, 3)
     plt.subplot(gs[0, :])
     plt.pcolormesh(t, x, u, cmap="rainbow")
@@ -101,16 +104,17 @@ if __name__ == "__main__":
 
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig("../figures/Fig_1,25k_NNdef_e12_001pi.png", dpi=300)
-    plt.show()
+    plt.savefig("figures/Fig_15k_NNdef_e7_0025pi.png", dpi=300)
 
     # CHANGE FOR EVERY CASE
     np.savetxt(
-        "../results/Uend_1,25k_NNdef_e12_001pi.csv", u, delimiter=","
+        "results/raw/Uend_15k_NNdef_e7_0025pi.csv", u, delimiter=","
     )  # Save vector for plotting all together in one axis
 
     # The Comparison to FDM
-    u_fdm_all = pd.read_csv("../results/FDM data/u_fd.csv", header=None)  # Import all u
+    u_fdm_all = pd.read_csv(
+        "results/FDM/u_6400-0025pi.csv", header=None
+    )  # Import all u
     u_fdm_end = u_fdm_all.iloc[:, -1]  # Extract last vector
     u_fdm_end = pd.DataFrame.to_numpy(
         u_fdm_end
@@ -120,3 +124,4 @@ if __name__ == "__main__":
     u_mean = np.mean(u_error)
     u_std = np.std(u_error)
     print("The mean error in u was ", u_mean, " with s.d. of ", u_std, ".\n")
+    # plt.show()

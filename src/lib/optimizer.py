@@ -20,7 +20,7 @@ class L_BFGS_B:
     """
 
     def __init__(
-        self, model, x_train, y_train, factr=1e12, m=50, maxls=50, maxiter=10000
+        self, model, x_train, y_train, factr=1e7, m=50, maxls=50, maxiter=5000
     ):
         """
         Args:
@@ -34,6 +34,7 @@ class L_BFGS_B:
         """
 
         # set attributes
+        print("The factr is ", factr)
         self.model = model
         self.x_train = [tf.constant(x, dtype=tf.float32) for x in x_train]
         self.y_train = [tf.constant(y, dtype=tf.float32) for y in y_train]
