@@ -16,7 +16,7 @@ if __name__ == "__main__":
     """
 
     # number of training samples
-    num_train_samples = 15000
+    num_train_samples = 1000
     # num_collocation_samples = 8000
     # number of test samples
     num_test_samples = 6401
@@ -60,13 +60,18 @@ if __name__ == "__main__":
     u = u.reshape(t.shape)
 
     comp_time = time.time() - start_time
-    print("\nThe training and prediction took %s seconds ~ ~" % (comp_time))
+    print(
+        "\nThe training and prediction took %s seconds ~ ~\n Just to check: Training points = %s"
+        % (comp_time, num_train_samples)
+    )
     # Add a line here to save the data for comparison.
     # np.savetxt("t_NN.csv", t, delimiter=",")
     # np.savetxt("x_NN.csv", x, delimiter=",")
 
     # ================================================
-    np.savetxt("results/raw/Uall_15k_NNdef_e7_0025pi.csv", u, delimiter=",")
+    np.savetxt(
+        "results/raw/Uall_1k_NNdef_e7_0025pi.csv", u, delimiter=","
+    )  # This has to be done now as u is overwrit further down
     print("\nSolution array has been exported ~ ~\n")
 
     # ------------------------------------------------------
@@ -104,11 +109,11 @@ if __name__ == "__main__":
 
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig("figures/Fig_15k_NNdef_e7_0025pi.png", dpi=300)
+    plt.savefig("figures/Fig_1k_NNdef_e7_0025pi.png", dpi=300)
 
     # CHANGE FOR EVERY CASE
     np.savetxt(
-        "results/raw/Uend_15k_NNdef_e7_0025pi.csv", u, delimiter=","
+        "results/raw/Uend_1k_NNdef_e7_0025pi.csv", u, delimiter=","
     )  # Save vector for plotting all together in one axis
 
     # The Comparison to FDM
