@@ -16,12 +16,12 @@ if __name__ == "__main__":
     """
 
     # number of training samples
-    num_train_samples = 1000
+    num_train_samples = 8000
     # num_collocation_samples = 8000
     # number of test samples
     num_test_samples = 6401
     # kinematic viscosity
-    nu = 0.0025 / np.pi
+    nu = 0.01 / np.pi
 
     # build a core network model
     network = Network.build()
@@ -29,13 +29,27 @@ if __name__ == "__main__":
     # build a PINN model
     pinn = PINN(network, nu).build()
 
-    # create training input
-    tx_eqn = np.random.rand(num_train_samples, 2)  # t_eqn =  0 ~ +1
-    tx_eqn[..., 1] = 2 * tx_eqn[..., 1] - 1  # x_eqn = -1 ~ +1
+    # # Create training input - no bias
+    # tx_eqn = np.random.rand(num_train_samples, 2)  # t_eqn =  0 ~ +1
+    # tx_eqn[..., 1] = 2 * tx_eqn[..., 1] - 1  # x_eqn = -1 ~ +1
+
+    # create training input, collocation points
+    collocation_top = np.random.rand(int(num_train_samples / 8), 2)
+    collocation_mid = np.random.rand(int(num_train_samples * 3 / 4), 2)
+    collocation_bot = np.random.rand(int(num_train_samples / 8), 2)
+    collocation_top[..., 1] = 0.6 * collocation_top[..., 1] + 0.4  # x from 0.4 to 1.0
+    collocation_mid[..., 1] = 0.8 * collocation_mid[..., 1] - 0.4  # x from -0.4 to 0.4
+    collocation_bot[..., 1] = (0.6 * collocation_bot[..., 1]) - 1  # x from -1.0 to -0.4
+    tx_eqn = np.concatenate(
+        (collocation_top, collocation_mid, collocation_bot), axis=0
+    )  # Put them together again
+
+    # create training input continued
     tx_ini = 2 * np.random.rand(num_train_samples, 2) - 1  # x_ini = -1 ~ +1
     tx_ini[..., 0] = 0  # t_ini =  0
     tx_bnd = np.random.rand(num_train_samples, 2)  # t_bnd =  0 ~ +1
     tx_bnd[..., 1] = 2 * np.round(tx_bnd[..., 1]) - 1  # x_bnd = -1 or +1
+
     # create training output
     u_eqn = np.zeros((num_train_samples, 1))  # u_eqn = 0
     u_ini = np.sin(-np.pi * tx_ini[..., 1, np.newaxis])  # u_ini = -sin(pi*x_ini)
@@ -70,7 +84,7 @@ if __name__ == "__main__":
 
     # ================================================
     np.savetxt(
-        "results/raw/Uall_1k_NNdef_e7_0025pi.csv", u, delimiter=","
+        "results/raw/Uall_8k_Nndef_e7_001pi_biastest3.csv", u, delimiter=","
     )  # This has to be done now as u is overwrit further down
     print("\nSolution array has been exported ~ ~\n")
 
@@ -109,17 +123,15 @@ if __name__ == "__main__":
 
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig("figures/Fig_1k_NNdef_e7_0025pi.png", dpi=300)
+    plt.savefig("figures/Fig_8k_Nndef_e7_001pi_biastest3.png", dpi=300)
 
     # CHANGE FOR EVERY CASE
     np.savetxt(
-        "results/raw/Uend_1k_NNdef_e7_0025pi.csv", u, delimiter=","
+        "results/raw/Uend_8k_Nndef_e7_001pi_biastest3.csv", u, delimiter=","
     )  # Save vector for plotting all together in one axis
 
     # The Comparison to FDM
-    u_fdm_all = pd.read_csv(
-        "results/FDM/u_6400-0025pi.csv", header=None
-    )  # Import all u
+    u_fdm_all = pd.read_csv("results/FDM/u_6400.csv", header=None)  # Import all u
     u_fdm_end = u_fdm_all.iloc[:, -1]  # Extract last vector
     u_fdm_end = pd.DataFrame.to_numpy(
         u_fdm_end
