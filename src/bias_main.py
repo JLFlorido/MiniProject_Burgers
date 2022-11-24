@@ -1,3 +1,8 @@
+"""
+bias_main.py Like main, but creating collocation points via a lattice instead of randomly.
+ This lattice is adjusted between runs to create a different bias every time, on lines 42 to 50.
+"""
+
 import lib.tf_silent
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,7 +21,7 @@ if __name__ == "__main__":
     """
 
     # number of training samples
-    num_train_samples = 8000
+    num_train_samples = 2500
     # num_collocation_samples = 8000
     # number of test samples
     num_test_samples = 6401
@@ -29,9 +34,22 @@ if __name__ == "__main__":
     # build a PINN model
     pinn = PINN(network, nu).build()
 
-    # Create training input - no bias
-    tx_eqn = np.random.rand(num_train_samples, 2)  # t_eqn =  0 ~ +1
-    tx_eqn[..., 1] = 2 * tx_eqn[..., 1] - 1  # x_eqn = -1 ~ +1
+    # # Create training input - no bias
+    # tx_eqn = np.random.rand(num_train_samples, 2)  # t_eqn =  0 ~ +1
+    # tx_eqn[..., 1] = 2 * tx_eqn[..., 1] - 1  # x_eqn = -1 ~ +1
+
+    # create training input, collocation points
+    collocation_top = np.random.rand(int(num_train_samples * 2 / 20), 2)
+    collocation_mid = np.random.rand(int(num_train_samples * 8 / 10), 2)
+    collocation_bot = np.random.rand(int(num_train_samples * 2 / 20), 2)
+    collocation_top[..., 1] = 0.6 * collocation_top[..., 1] + 0.4  # x from 0.4 to 1.0
+    collocation_mid[..., 1] = 0.8 * collocation_mid[..., 1] - 0.4  # x from -0.4 to 0.4
+    collocation_bot[..., 1] = (0.6 * collocation_bot[..., 1]) - 1  # x from -1.0 to -0.4
+    tx_eqn = np.concatenate(
+        (collocation_top, collocation_mid, collocation_bot), axis=0
+    )  # Put them together again
+
+    # create training input continued
     tx_ini = 2 * np.random.rand(num_train_samples, 2) - 1  # x_ini = -1 ~ +1
     tx_ini[..., 0] = 0  # t_ini =  0
     tx_bnd = np.random.rand(num_train_samples, 2)  # t_bnd =  0 ~ +1
@@ -53,7 +71,7 @@ if __name__ == "__main__":
     # # can choose grid resolution.
     t_flat = np.linspace(
         0, (3 / np.pi), num_test_samples
-    )  # This 3/pi was here in old code and moving from notebook version wasn't changed... Keep as 3/pi for consistency but fixing to 0 to 1 range will improve accuracy overal...
+    )  # This 3/pi was here in old code and moving from notebook version wasn't changed... Keep as 3/pi for consistency
     x_flat = np.linspace(-1, 1, num_test_samples)
     t, x = np.meshgrid(t_flat, x_flat)
     tx = np.stack([t.flatten(), x.flatten()], axis=-1)
@@ -71,13 +89,13 @@ if __name__ == "__main__":
 
     # ================================================
     np.savetxt(
-        "results/raw/Uall_8k_Nndef_e7_001pi_biastest3.csv", u, delimiter=","
+        "results/raw/Uall_2,5k_bias3_run0.csv", u, delimiter=","
     )  # This has to be done now as u is overwrit further down
     print("\nSolution array has been exported ~ ~\n")
 
     # ------------------------------------------------------
     # plot u(t,x) distribution as a color-map       # CELL 4
-    fig = plt.figure(figsize=(14, 12), dpi=200)
+    fig = plt.figure(figsize=(10, 8), dpi=50)
     gs = GridSpec(3, 3)
     plt.subplot(gs[0, :])
     plt.pcolormesh(t, x, u, cmap="rainbow")
@@ -110,11 +128,11 @@ if __name__ == "__main__":
 
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig("figures/Fig_8k_Nndef_e7_001pi_biastest3.png", dpi=300)
+    plt.savefig("figures/Bias Results/Fig_2,5k_bias3_run0.png", dpi=300)
 
     # CHANGE FOR EVERY CASE
     np.savetxt(
-        "results/raw/Uend_8k_Nndef_e7_001pi_biastest3.csv", u, delimiter=","
+        "results/raw/Uend_2,5k_bias3_run0.csv", u, delimiter=","
     )  # Save vector for plotting all together in one axis
 
     # The Comparison to FDM
@@ -128,4 +146,13 @@ if __name__ == "__main__":
     u_mean = np.mean(u_error)
     u_std = np.std(u_error)
     print("The mean error in u was ", u_mean, " with s.d. of ", u_std, ".\n")
-    # plt.show()
+    plt.show()
+
+    fig = plt.figure(figsize=(16, 12), dpi=100)
+    plt.xlabel("$t$")
+    plt.ylabel("$x$")
+    plt.ylim([-1, 1])
+    plt.xlim([0, 1])
+    plt.plot(tx_eqn[:, 0], tx_eqn[:, 1], "x", markersize=2)
+
+    plt.show()
