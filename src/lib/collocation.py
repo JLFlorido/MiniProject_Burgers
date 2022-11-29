@@ -1,15 +1,5 @@
 import numpy as np
 
-# Code generating points uniformly on arbitrary triangles from S.O.
-def points_on_triangle(v, n):
-    """
-    Give n random points uniformly on a triangle.
-
-    The vertices of the triangle are given by the shape
-    (2, 3) array *v*: one vertex per row.
-    """
-    x = np.sort(np.random.rand(2, n), axis=0)
-    return np.column_stack([x[0], x[1] - x[0], 1.0 - x[1]]) @ v
 
 def collocation(num_training_samples, bias_choice, pt1):
     """
@@ -40,6 +30,20 @@ def collocation(num_training_samples, bias_choice, pt1):
     Bot_v = [(0, -1), (1, -1), (1, pt2)]
     A1_v = [(0, -1), (0, 1), (1, pt2)]
     A2_v = [(0, 1), (1, pt1), (1, pt2)]
+
+    # Code generating points uniformly on arbitrary triangles blow is from StackOverflow "Mark Dickinson"
+    # Link: https://stackoverflow.com/questions/47410054/generate-random-locations-within-a-triangular-domain
+
+    def points_on_triangle(v, n):
+        """
+        Give n random points uniformly on a triangle.
+
+        The vertices of the triangle are given by the shape
+        (2, 3) array *v*: one vertex per row.
+        """
+        x = np.sort(np.random.rand(2, n), axis=0)
+        return np.column_stack([x[0], x[1] - x[0], 1.0 - x[1]]) @ v
+
     # Using function to create lattice now:
     collocation_top = points_on_triangle(Top_v, Top_n)
     collocation_mid1 = points_on_triangle(A1_v, A1_n)
