@@ -34,7 +34,7 @@ class L_BFGS_B:
         """
 
         # set attributes
-        print("The factr is ", factr)
+        print("The factr is {0:e}".format(factr))
         self.model = model
         self.x_train = [tf.constant(x, dtype=tf.float32) for x in x_train]
         self.y_train = [tf.constant(y, dtype=tf.float32) for y in y_train]

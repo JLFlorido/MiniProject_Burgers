@@ -14,7 +14,8 @@ import time
 import pandas as pd
 from lib.collocation import collocation
 
-def run_pinns(bias_factor,time_taken, mean_results, stddev_results):
+
+def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_results):
     """
     Test the physics informed neural network (PINN) model for Burgers' equation
     """
@@ -28,12 +29,12 @@ def run_pinns(bias_factor,time_taken, mean_results, stddev_results):
 
     # build a core network model
     network = Network.build()
-    network.summary()
+    # network.summary()
     # build a PINN model
     pinn = PINN(network, nu).build()
 
     # create training input, collocation points
-    tx_eqn = collocation(num_train_samples,bias_factor,pt1)
+    tx_eqn = collocation(num_train_samples, bias_factor, pt1)
 
     # create training input continued
     tx_ini = 2 * np.random.rand(num_train_samples, 2) - 1  # x_ini = -1 ~ +1
@@ -64,7 +65,9 @@ def run_pinns(bias_factor,time_taken, mean_results, stddev_results):
     u = network.predict(tx, batch_size=num_test_samples)
     u = u.reshape(t.shape)
 
+    saving_start_time = time.time()
     time_taken.append(time.time() - start_time)
+
     # ------------------------------------------------------
     # plot u(t,x) distribution as a color-map       # CELL 4
     fig = plt.figure(figsize=(10, 8), dpi=50)
@@ -100,7 +103,9 @@ def run_pinns(bias_factor,time_taken, mean_results, stddev_results):
 
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig(f:"figures/Bias Results/test.png", dpi=300)
+    plt.savefig(
+        "figures/Bias Results/Type2bias_{0:.2f}.png".format(bias_factor), dpi=300
+    )
 
     # # CHANGE FOR EVERY CASE
     # np.savetxt(
@@ -120,5 +125,6 @@ def run_pinns(bias_factor,time_taken, mean_results, stddev_results):
 
     mean_results.append(u_mean)
     stddev_results.append(u_std)
-
-    return time_taken, mean_results, stddev_results
+    bias_history.append(bias_factor)
+    print("Case Done, saving took {0:.2f}s".format(time.time() - saving_start_time))
+    return bias_history, time_taken, mean_results, stddev_results
