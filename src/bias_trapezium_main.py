@@ -23,7 +23,7 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
     # number of training, test samples, bias position (pt1).
     num_train_samples = 2500
     num_test_samples = 6401
-    pt1 = 0.2
+    pt1 = 0.1
     # kinematic viscosity
     nu = 0.01 / np.pi
 
@@ -104,7 +104,7 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
     plt.tight_layout()
     # CHANGE FOR EVERY CASE
     plt.savefig(
-        "figures/Bias Results/Type2bias_{0:.2f}.png".format(bias_factor), dpi=300
+        "figures/Bias Results/2,5k_Case0_{0:.2f}.png".format(bias_factor), dpi=300
     )
 
     # # CHANGE FOR EVERY CASE
@@ -126,5 +126,5 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
     mean_results.append(u_mean)
     stddev_results.append(u_std)
     bias_history.append(bias_factor)
-    print("Case Done, saving took {0:.2f}s".format(time.time() - saving_start_time))
+    print("\nCase Done, saving took {0:.2f}s".format(time.time() - saving_start_time))
     return bias_history, time_taken, mean_results, stddev_results
