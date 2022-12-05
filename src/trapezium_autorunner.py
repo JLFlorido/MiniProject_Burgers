@@ -11,16 +11,7 @@ from lib.collocation import collocation
 from bias_trapezium_main import run_pinns
 import io
 
-biases = [
-    0.28,
-    0.3,
-    0.4,
-    0.5,
-    0.6,
-    0.7,
-    0.8,
-    0.9,
-]
+biases = [0.28]
 # Initialise arrays the results will be appended to.
 bias_history = []
 time_results = []

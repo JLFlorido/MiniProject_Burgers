@@ -24,6 +24,13 @@ Scripts is given as follows.
     * `tf_silent.py` : suppressing tensorflow warnings
 * `main.py` : main routine to run and test the PINN solver.
 
+My additions are the following:
+* 'fdm_main.py': Finite difference solver of burger's equation.
+* 'fdm_convergence.py': Code for calculating convergence of above with number of points
+* 'bias_simple_main.py': Adjustment to main routine that runs PINN with 3 rectangle zones for collocation point placement
+* 'bias_trapezium_main.py': Like above, but more complex collocation point placement. Defined as function so can be autorun by next library
+* 'main_v2.py': Current (as of 5 Dec) iteration of above, calculating error by comparing points over entire field.
+* 'trapezium_autorunner.py': Code that runs above in series, saving results.
 ## Requirement
 
 You need Python 3.6 and the following packages.

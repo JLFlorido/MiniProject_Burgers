@@ -69,50 +69,55 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
     time_taken.append(time.time() - start_time)
 
     # ------------------------------------------------------
-    # plot u(t,x) distribution as a color-map       # CELL 4
-    fig = plt.figure(figsize=(10, 8), dpi=50)
-    gs = GridSpec(3, 3)
-    plt.subplot(gs[0, :])
-    plt.pcolormesh(t, x, u, cmap="rainbow")
-    plt.xlabel("t")
-    plt.ylabel("x")
-    cbar = plt.colorbar(pad=0.05, aspect=10)
-    cbar.set_label("u(t,x)")
-    cbar.mappable.set_clim(-1, 1)
-    # plot u(t=const, x) cross-sections
-    t_cross_sections = [0.05, 0.25, 0.5]  # , 0.75, 0.95]
-    for i, t_cs in enumerate(t_cross_sections):
-        plt.subplot(gs[1, i])
-        tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
-        u = network.predict(tx, batch_size=num_test_samples)
-        plt.plot(x_flat, u)
-        plt.title("t={}".format(t_cs))
-        plt.xlabel("x")
-        plt.ylabel("u(t,x)")
+    #     # plot u(t,x) distribution as a color-map       # CELL 4
+    #     fig = plt.figure(figsize=(10, 8), dpi=50)
+    #     gs = GridSpec(3, 3)
+    #     plt.subplot(gs[0, :])
+    #     plt.pcolormesh(t, x, u, cmap="rainbow")
+    #     plt.xlabel("t")
+    #     plt.ylabel("x")
+    #     cbar = plt.colorbar(pad=0.05, aspect=10)
+    #     cbar.set_label("u(t,x)")
+    #     cbar.mappable.set_clim(-1, 1)
 
-        # plot second batch of cross sections
-    t_cross_sections = [0.75, 0.95, 1]
-    for i, t_cs in enumerate(t_cross_sections):
-        plt.subplot(gs[2, i])
-        tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
-        u = network.predict(tx, batch_size=num_test_samples)
-        plt.plot(x_flat, u)
-        plt.title("t={}".format(t_cs))
-        plt.xlabel("x")
-        plt.ylabel("u(t,x)")
+    #     #plot u(t=const, x) cross-sections
+    # t_cross_sections = [0.05, 0.25, 0.5]  # , 0.75, 0.95]
+    # for i, t_cs in enumerate(t_cross_sections):
+    #     plt.subplot(gs[1, i])
+    #     tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
+    #     u = network.predict(tx, batch_size=num_test_samples)
+    #     plt.plot(x_flat, u)
+    #     plt.title("t={}".format(t_cs))
+    #     plt.xlabel("x")
+    #     plt.ylabel("u(t,x)")
+    #     # plot second batch of cross sections
+    # t_cross_sections = [0.75, 0.95, 1]
+    # for i, t_cs in enumerate(t_cross_sections):
+    #     plt.subplot(gs[2, i])
+    #     tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
+    #     u = network.predict(tx, batch_size=num_test_samples)
+    #     plt.plot(x_flat, u)
+    #     plt.title("t={}".format(t_cs))
+    #     plt.xlabel("x")
+    #     plt.ylabel("u(t,x)")
 
-    plt.tight_layout()
+    # plt.tight_layout()
     # CHANGE FOR EVERY CASE
-    plt.savefig(
-        "figures/Bias Results/2,5k_Case0_{0:.2f}.png".format(bias_factor), dpi=300
-    )
+    # plt.savefig(
+    #     "figures/Bias Results/2,5k_Case0_{0:.2f}.png".format(bias_factor), dpi=300
+    # )
+    # -------------- Note the below 2 lines compute u at the last column for comparison to fdm.
+    # They are not needed if the above code for plotting is uncommented. -------------------
+    tx = np.stack([np.full(t_flat.shape, 1), x_flat], axis=-1)
+    u = network.predict(tx, batch_size=num_test_samples)
 
     # # CHANGE FOR EVERY CASE
     # np.savetxt(
     #     "results/raw/Uend_2,5k_bias3_run0.csv", u, delimiter=","
     # )  # Save vector for plotting all together in one axis
 
-    # The Comparison to FDM
+    # ------------------------------------------------------------------------------------------------------
+    # The Comparison of the last vector to FDM
     u_fdm_all = pd.read_csv("results/FDM/u_6400.csv", header=None)  # Import all u
     u_fdm_end = u_fdm_all.iloc[:, -1]  # Extract last vector
     u_fdm_end = pd.DataFrame.to_numpy(
