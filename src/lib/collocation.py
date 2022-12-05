@@ -26,7 +26,7 @@ def collocation(num_training_samples, bias_choice, pt1):
     Bot1 = Top1
     Bot2 = Top2
     print(
-        f"Biased section is {(A1+A2+A3)*100/2:.1f}% of the total area,\nand contains {bias_choice*100}% of the points"
+        f"Biased section is {(A1+A2+A3)*100/2:.1f}% of the total area,\nand contains {bias_choice*100:.1f}% of the points"
     )
 
     # Number of points in each section
