@@ -2,7 +2,7 @@ import numpy as np
 
 # import matplotlib.pyplot as plt
 
-# test
+# For Testing Purposes: Uncomment lines 6-8, 102-132 and 137-145
 # num_training_samples = 2500
 # bias_choice = 0.5
 # pt1 = 0.08
