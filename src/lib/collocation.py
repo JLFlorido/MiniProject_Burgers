@@ -2,10 +2,10 @@ import numpy as np
 
 # import matplotlib.pyplot as plt
 
-# For Testing Purposes: Uncomment lines 6-8, 102-132 and 137-145
-# num_training_samples = 2500
-# bias_choice = 0.5
-# pt1 = 0.08
+# # For Testing Purposes: Uncomment lines 6-8, 102-132 and 137-145
+# num_training_samples = 500
+# bias_choice = 0.7
+# pt1 = 0.15
 
 
 def collocation(num_training_samples, bias_choice, pt1):
@@ -14,7 +14,7 @@ def collocation(num_training_samples, bias_choice, pt1):
     Creating collocation points and returning them
     """
     # Defining points on rhs
-    xdiv = 0.4  # This should be tested and then kept constant
+    xdiv = 0.5  # This should be tested and then kept constant
     pt2 = pt1 * -1
 
     # Therefore areas of trapezium halves
@@ -99,7 +99,7 @@ def collocation(num_training_samples, bias_choice, pt1):
         ),
         axis=0,
     )
-    # # Below is for visualisation
+    #    # Below is for visualisation
     # fig = plt.figure()
     # plt.xlabel("$t$")
     # plt.ylabel("$x$")

@@ -23,9 +23,9 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
     start_time = time.time()
 
     # number of training, test samples, bias position (pt1).
-    num_train_samples = 500
+    num_train_samples = 2500
     num_test_samples = 6401
-    pt1 = 0.1
+    pt1 = 0.15
 
     # kinematic viscosity
     nu = 0.01 / np.pi
@@ -105,8 +105,8 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
         plt.ylabel("u(t,x)")
 
     plt.tight_layout()
-    plt.savefig("figures/Bias Results/Case2a_{0:.2f}.png".format(bias_factor), dpi=300)
-
+    plt.savefig("figures/Bias Results/Case4b_{0:.2f}.png".format(bias_factor), dpi=300)
+    plt.close(fig)
     # ------------------------------------------------------------------------------------------------------
     # Importing FDM "Ground Truth" Results
     u_fdm_all = pd.read_csv("results/FDM/u_6400.csv", header=None)  # Import all u
