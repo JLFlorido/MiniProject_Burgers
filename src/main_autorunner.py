@@ -7,8 +7,8 @@ import time
 # Time to run all biases, to help plan better
 autorun_starttime = time.time()
 # Create list of biases to run through
-biases = [0.362, 0.38, 0.4, 0.44, 0.48, 0.55, 0.6, 0.7]
-repeats = 4
+biases = [0.362, 0.5, 0.6]
+repeats = 5
 biases = np.repeat(biases, repeats)
 # a = [0.32, 0.32, 0.36, 0.36, 0.45, 0.45]
 # biases = np.append(biases, a)
@@ -18,11 +18,11 @@ bias_history = []
 time_results = []
 mean_results = []
 stddev_results = []
-
+counter = 0
 # Run PINNs for every bias, saving to arrays initialised above.
 for bias_factor in biases:
-    bias_history, time_results, mean_results, stddev_results = run_pinns(
-        bias_factor, bias_history, time_results, mean_results, stddev_results
+    bias_history, time_results, mean_results, stddev_results, counter = run_pinns(
+        bias_factor, bias_history, time_results, mean_results, stddev_results, counter
     )
 
 # Save results as a dataframe, export to a csv file
@@ -35,7 +35,7 @@ df = pd.DataFrame(
     }
 )
 df.to_csv(
-    "results/raw/Case4b_run0.csv", encoding="utf-8", index=False
+    "results/raw/Variance_test2.csv", encoding="utf-8", index=False
 )  # case0_run1_all
 print("\n All runs ({}) done and results saved".format(len(biases)))
 

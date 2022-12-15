@@ -15,12 +15,15 @@ import pandas as pd
 from lib.collocation import collocation
 
 
-def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_results):
+def run_pinns(
+    bias_factor, bias_history, time_taken, mean_results, stddev_results, counter
+):
     """
     Test the physics informed neural network (PINN) model for Burgers' equation
     """
     # Save starting time
     start_time = time.time()
+    counter = counter + 1
 
     # number of training, test samples, bias position (pt1).
     num_train_samples = 2500
@@ -105,7 +108,12 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
         plt.ylabel("u(t,x)")
 
     plt.tight_layout()
-    plt.savefig("figures/Bias Results/Case4b_{0:.2f}.png".format(bias_factor), dpi=300)
+    plt.savefig(
+        "figures/Bias Results/Variance_test2_{0:.2f}_{0:.0f}.png".format(
+            bias_factor, counter
+        ),
+        dpi=300,
+    )
     plt.close(fig)
     # ------------------------------------------------------------------------------------------------------
     # Importing FDM "Ground Truth" Results
@@ -131,4 +139,4 @@ def run_pinns(bias_factor, bias_history, time_taken, mean_results, stddev_result
         )
     )
 
-    return bias_history, time_taken, mean_results, stddev_results
+    return bias_history, time_taken, mean_results, stddev_results, counter

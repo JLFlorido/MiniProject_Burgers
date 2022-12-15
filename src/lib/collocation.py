@@ -13,6 +13,8 @@ def collocation(num_training_samples, bias_choice, pt1):
     Obtaining number of training samples, bias choice and height of trapezium.
     Creating collocation points and returning them
     """
+    # For investigating variation only
+    np.random.seed(5678)
     # Defining points on rhs
     xdiv = 0.5  # This should be tested and then kept constant
     pt2 = pt1 * -1
@@ -99,7 +101,7 @@ def collocation(num_training_samples, bias_choice, pt1):
         ),
         axis=0,
     )
-    #    # Below is for visualisation
+    # # Below is for visualisation
     # fig = plt.figure()
     # plt.xlabel("$t$")
     # plt.ylabel("$x$")
@@ -135,7 +137,7 @@ def collocation(num_training_samples, bias_choice, pt1):
 
 
 # test_array = collocation(num_training_samples, bias_choice, pt1)
-# fig = plt.figure(figsize=[12, 8], dpi=100)
+# fig = plt.figure(figsize=[12, 8], dpi=50)
 # plt.xlabel("$t$")
 # plt.ylabel("$x$")
 # plt.ylim([-1, 1])
