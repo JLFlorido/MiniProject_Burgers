@@ -14,7 +14,7 @@ def collocation(num_training_samples, bias_choice, pt1):
     Creating collocation points and returning them
     """
     # For investigating variation only
-    np.random.seed(5678)
+    np.random.seed(1111)
     # Defining points on rhs
     xdiv = 0.5  # This should be tested and then kept constant
     pt2 = pt1 * -1

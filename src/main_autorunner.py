@@ -7,7 +7,7 @@ import time
 # Time to run all biases, to help plan better
 autorun_starttime = time.time()
 # Create list of biases to run through
-biases = [0.362, 0.5, 0.6]
+biases = [0.362, 0.44, 0.5, 0.6]
 repeats = 5
 biases = np.repeat(biases, repeats)
 # a = [0.32, 0.32, 0.36, 0.36, 0.45, 0.45]
@@ -35,7 +35,7 @@ df = pd.DataFrame(
     }
 )
 df.to_csv(
-    "results/raw/Variance_test2.csv", encoding="utf-8", index=False
+    "results/raw/Rate_seed1_0.csv", encoding="utf-8", index=False
 )  # case0_run1_all
 print("\n All runs ({}) done and results saved".format(len(biases)))
 
