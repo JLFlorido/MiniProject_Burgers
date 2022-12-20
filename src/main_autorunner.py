@@ -35,7 +35,7 @@ df = pd.DataFrame(
     }
 )
 df.to_csv(
-    "results/raw/Rate_seed1_0.csv", encoding="utf-8", index=False
+    "results/raw/Rate_seed2_1.csv", encoding="utf-8", index=False
 )  # case0_run1_all
 print("\n All runs ({}) done and results saved".format(len(biases)))
 
