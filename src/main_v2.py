@@ -26,7 +26,7 @@ def run_pinns(
     counter = counter + 1
 
     # number of training, test samples, bias position (pt1).
-    num_train_samples = 10000
+    num_train_samples = 2500
     print("Number of points: {}. ".format(num_train_samples))
     print("Checking randomness: {}".format(np.random.rand()))
     num_test_samples = 6401
@@ -111,7 +111,7 @@ def run_pinns(
 
     plt.tight_layout()
     plt.savefig(
-        "figures/Variance Results/Rate_seed1_1_{0:.2f}_{1:.0f}.png".format(
+        "figures/Variance Results/Rate_seed3_2_{0:.2f}_{1:.0f}.png".format(
             bias_factor, counter
         ),
         dpi=300,
