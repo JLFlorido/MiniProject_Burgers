@@ -26,7 +26,7 @@ def run_pinns(
     counter = counter + 1
 
     # number of training, test samples, bias position (pt1).
-    num_train_samples = 2500
+    num_train_samples = 7500
     print("Number of points: {}. ".format(num_train_samples))
     print("Checking randomness: {}".format(np.random.rand()))
     num_test_samples = 6401
@@ -75,48 +75,48 @@ def run_pinns(
     saving_start_time = time.time()
     time_taken.append(time.time() - start_time)
 
-    # ------------------------------------------------------
-    # plot u(t,x) distribution as a color-map       # Plotting
-    fig = plt.figure(figsize=(10, 8), dpi=50)
-    gs = GridSpec(3, 3)
-    plt.subplot(gs[0, :])
-    plt.pcolormesh(t, x, u, cmap="rainbow")
-    plt.xlabel("t")
-    plt.ylabel("x")
-    cbar = plt.colorbar(pad=0.05, aspect=10)
-    cbar.set_label("u(t,x)")
-    cbar.mappable.set_clim(-1, 1)
+    # # ------------------------------------------------------
+    # # plot u(t,x) distribution as a color-map       # Plotting
+    # fig = plt.figure(figsize=(10, 8), dpi=50)
+    # gs = GridSpec(3, 3)
+    # plt.subplot(gs[0, :])
+    # plt.pcolormesh(t, x, u, cmap="rainbow")
+    # plt.xlabel("t")
+    # plt.ylabel("x")
+    # cbar = plt.colorbar(pad=0.05, aspect=10)
+    # cbar.set_label("u(t,x)")
+    # cbar.mappable.set_clim(-1, 1)
 
-    # plot u(t=const, x) cross-sections
-    t_cross_sections = [0.05, 0.25, 0.5]  # , 0.75, 0.95]
-    for i, t_cs in enumerate(t_cross_sections):
-        plt.subplot(gs[1, i])
-        tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
-        u = network.predict(tx, batch_size=num_test_samples)
-        plt.plot(x_flat, u)
-        plt.title("t={}".format(t_cs))
-        plt.xlabel("x")
-        plt.ylabel("u(t,x)")
-        # plot second batch of cross sections
+    # # plot u(t=const, x) cross-sections
+    # t_cross_sections = [0.05, 0.25, 0.5]  # , 0.75, 0.95]
+    # for i, t_cs in enumerate(t_cross_sections):
+    #     plt.subplot(gs[1, i])
+    #     tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
+    #     u = network.predict(tx, batch_size=num_test_samples)
+    #     plt.plot(x_flat, u)
+    #     plt.title("t={}".format(t_cs))
+    #     plt.xlabel("x")
+    #     plt.ylabel("u(t,x)")
+    #     # plot second batch of cross sections
 
-    t_cross_sections = [0.75, 0.95, 1]
-    for i, t_cs in enumerate(t_cross_sections):
-        plt.subplot(gs[2, i])
-        tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
-        u = network.predict(tx, batch_size=num_test_samples)
-        plt.plot(x_flat, u)
-        plt.title("t={}".format(t_cs))
-        plt.xlabel("x")
-        plt.ylabel("u(t,x)")
+    # t_cross_sections = [0.75, 0.95, 1]
+    # for i, t_cs in enumerate(t_cross_sections):
+    #     plt.subplot(gs[2, i])
+    #     tx = np.stack([np.full(t_flat.shape, t_cs), x_flat], axis=-1)
+    #     u = network.predict(tx, batch_size=num_test_samples)
+    #     plt.plot(x_flat, u)
+    #     plt.title("t={}".format(t_cs))
+    #     plt.xlabel("x")
+    #     plt.ylabel("u(t,x)")
 
-    plt.tight_layout()
-    plt.savefig(
-        "figures/Variance Results/Rate_seed3_2_{0:.2f}_{1:.0f}.png".format(
-            bias_factor, counter
-        ),
-        dpi=300,
-    )
-    plt.close(fig)
+    # plt.tight_layout()
+    # plt.savefig(
+    #     "figures/Variance Results/Rate_noseed_3_{0:.2f}_{1:.0f}.png".format(
+    #         bias_factor, counter
+    #     ),
+    #     dpi=300,
+    # )
+    # plt.close(fig)
     # ------------------------------------------------------------------------------------------------------
     # Importing FDM "Ground Truth" Results
     u_fdm_all = pd.read_csv("results/FDM/u_6400.csv", header=None)  # Import all u
