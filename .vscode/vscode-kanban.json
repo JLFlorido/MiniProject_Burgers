@@ -1,0 +1,190 @@
+{
+  "todo": [
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Plan",
+      "creation_time": "2023-03-06T11:46:01.905Z",
+      "description": {
+        "content": "1. Is it worth pursuing - is it feasible, achievable, produces a gain. 2. How does it fit within philosophy of project - does it fix a flaw of PINNs or tap into it's advantages?",
+        "mime": "text/markdown"
+      },
+      "id": "9",
+      "prio": 1,
+      "references": [],
+      "title": "Explore Domain Decomposition for PINNs"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Writing",
+      "creation_time": "2023-03-06T11:41:10.282Z",
+      "description": {
+        "content": "Incorporate takeaways from SIAM",
+        "mime": "text/markdown"
+      },
+      "id": "3",
+      "prio": 1,
+      "references": [],
+      "title": "Training Plan Write Up"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "creation_time": "2023-03-06T11:38:42.249Z",
+      "description": {
+        "content": "Already implemented small changes and prepared Transfer Report Document at the time. This is for the more concrete philosophy and aims feedback from Steve.",
+        "mime": "text/markdown"
+      },
+      "id": "2",
+      "references": [],
+      "title": "Implement all FFPR feedback",
+      "category": "Writing"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Plan",
+      "creation_time": "2023-03-06T11:46:47.562Z",
+      "description": {
+        "content": "Now that you've attended SIAM and have a good understanding of current state of art.",
+        "mime": "text/markdown"
+      },
+      "id": "10",
+      "prio": 0,
+      "references": [],
+      "title": "Write Plan of Overall Lit Review"
+    }
+  ],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Writing",
+      "creation_time": "2023-03-06T11:41:55.561Z",
+      "description": {
+        "content": "Transcribe notes into a formal write-up",
+        "mime": "text/markdown"
+      },
+      "id": "4",
+      "prio": 3,
+      "references": [],
+      "title": "Point Sampling Literature Review Section"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Work",
+      "creation_time": "2023-03-06T13:20:50.043Z",
+      "id": "11",
+      "prio": 2,
+      "references": [],
+      "title": "Follow through with Collocation Plan",
+      "description": {
+        "content": "Need to define details with supervisor - DeepXDE/Regular/Adaptive first?",
+        "mime": "text/markdown"
+      }
+    },
+    {
+      "assignedTo": {
+        "name": "Jose Florido"
+      },
+      "category": "Work",
+      "creation_time": "2023-03-16T09:54:09.845Z",
+      "description": {
+        "content": "Not this again",
+        "mime": "text/markdown"
+      },
+      "id": "13",
+      "prio": 1,
+      "references": [],
+      "title": "DL Coursework 2"
+    }
+  ],
+  "testing": [
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Writing",
+      "creation_time": "2023-03-06T11:44:42.072Z",
+      "id": "8",
+      "prio": 2,
+      "references": [],
+      "title": "Summarise notes from SIAM"
+    }
+  ],
+  "done": [
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Plan",
+      "creation_time": "2023-03-06T11:43:51.905Z",
+      "id": "7",
+      "prio": 3,
+      "references": [],
+      "title": "Deep Learning Coursework 1"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Plan",
+      "creation_time": "2023-03-06T11:42:19.817Z",
+      "description": {
+        "content": "How, concretely, will I continue the work on collocation",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "prio": 2,
+      "references": [],
+      "title": "March Plan for main Work"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Writing",
+      "creation_time": "2023-03-06T11:43:35.121Z",
+      "description": {
+        "content": "Do big update once a month. Include notes from SIAM",
+        "mime": "text/markdown"
+      },
+      "id": "6",
+      "prio": 2,
+      "references": [],
+      "title": "Update Prof Dev Log"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "category": "Learning",
+      "creation_time": "2023-03-06T16:28:46.235Z",
+      "id": "12",
+      "prio": 1,
+      "references": [],
+      "title": "Catch up DL Lectures"
+    },
+    {
+      "assignedTo": {
+        "name": "mn17jilf"
+      },
+      "creation_time": "2023-03-06T11:29:15.203Z",
+      "description": {
+        "content": "Symposiums to attend.\nPeople to talk to?",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "references": [],
+      "title": "Prepare for SIAM"
+    }
+  ]
+}
